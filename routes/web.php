@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 Route::get('/', function () {
     return view('welcome');
@@ -28,5 +30,12 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 Route::get('/admin', [AdminController::class, 'index'])->middleware('auth');
 
 Route::resource('posts', PostController::class)->middleware('auth');
+
+Route::post('/logout', function (Request $request) {
+    Auth::logout();
+    $request->session()->invalidate();
+    $request->session()->regenerateToken();
+    return redirect('/');
+})->name('logout');
 
 require __DIR__.'/auth.php';
