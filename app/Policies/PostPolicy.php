@@ -32,14 +32,40 @@ class PostPolicy
         return false;
     }
 
+    /**
+     * Determine if the given post can be updated by the user.
+     */
     public function update(User $user, Post $post)
     {
-        return $user->id === $post->user_id;
+        // Admin can update all posts
+        if ($user->hasRole('admin')) {
+            return true;
+        }
+
+        // Author can update only their own posts
+        if ($user->hasRole('author') && $user->id === $post->user_id) {
+            return true;
+        }
+
+        return false;
     }
 
+    /**
+     * Determine if the given post can be deleted by the user.
+     */
     public function delete(User $user, Post $post)
     {
-        return $user->id === $post->user_id;
+        // Admin can delete all posts
+        if ($user->hasRole('admin')) {
+            return true;
+        }
+
+        // Author can delete only their own posts
+        if ($user->hasRole('author') && $user->id === $post->user_id) {
+            return true;
+        }
+
+        return false;
     }
 
 
