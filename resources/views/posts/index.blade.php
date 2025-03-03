@@ -11,7 +11,7 @@
       <div class="card mb-3">
         <div class="card-body">
           <h5 class="card-title">{{ $post->title }}</h5>
-          <p class="card-text">{{ \Illuminate\Support\Str::limit($post->content, 100) }}</p>
+          <p class="card-text">{!! \Illuminate\Support\Str::limit($post->content, 100) !!}</p>
           <a href="{{ route('posts.show', $post->id) }}" class="btn btn-secondary">View</a>
           @can('update', $post)
               <a href="{{ route('posts.edit', $post->id) }}" class="btn btn-warning">Edit</a>

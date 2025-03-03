@@ -21,6 +21,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('posts.index') }}">Posts</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('profile.edit') }}">Profile</a>
+                    </li>
                 </ul>
                 <div class="ml-auto">
                     <form action="{{ route('logout') }}" method="POST">
