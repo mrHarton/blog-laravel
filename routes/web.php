@@ -29,7 +29,18 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
 
 Route::get('/admin', [AdminController::class, 'index'])->middleware('auth');
 
-Route::resource('posts', PostController::class)->middleware('auth');
+// Public routes (accessible by everyone, including guests)
+Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
+Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show');
+
+// Protected routes (only for authenticated users)
+Route::middleware(['auth'])->group(function () {
+    Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
+    Route::post('/posts', [PostController::class, 'store'])->name('posts.store');
+    Route::get('/posts/{post}/edit', [PostController::class, 'edit'])->name('posts.edit');
+    Route::put('/posts/{post}', [PostController::class, 'update'])->name('posts.update');
+    Route::delete('/posts/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
+});
 
 Route::post('/logout', function (Request $request) {
     Auth::logout();

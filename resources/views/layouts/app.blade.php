@@ -21,16 +21,20 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('posts.index') }}">Posts</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('profile.edit') }}">Profile</a>
-                    </li>
+                    @auth
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('profile.edit') }}">Profile</a>
+                        </li>
+                    @endauth
                 </ul>
-                <div class="ml-auto">
-                    <form action="{{ route('logout') }}" method="POST">
-                        @csrf
-                        <button type="submit" class="btn btn-danger">Logout</button>
-                    </form>
-                </div>
+                @auth
+                    <div class="ml-auto">
+                        <form action="{{ route('logout') }}" method="POST">
+                            @csrf
+                            <button type="submit" class="btn btn-danger">Logout</button>
+                        </form>
+                    </div>
+                @endauth
             </div>
         </div>
     </nav>
