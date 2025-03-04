@@ -24,6 +24,17 @@
                     <input type="text" name="title" id="title" value="{{ old('title', $post->title) }}"
                         class="form-control" required>
                 </div>
+                <div class="form-group">
+                    <label for="categories">Categories:</label>
+                    <select name="categories[]" id="categories" class="form-control" multiple>
+                        @foreach($categories as $category)
+                            <option value="{{ $category->id }}" 
+                                {{ isset($post) && $post->categories->contains($category->id) ? 'selected' : '' }}>
+                                {{ $category->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
                 <div class="mb-3">
                     <label for="content" class="form-label">Content</label>
                     <textarea id="post-content" name="content" class="form-control">{{ old('content', $post->content ?? '') }}</textarea>

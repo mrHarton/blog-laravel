@@ -7,6 +7,9 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Admin\CategoryController;
+
+Route::resource('posts', PostController::class);
 
 Route::get('/', function () {
     return view('welcome');
@@ -40,6 +43,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/posts/{post}/edit', [PostController::class, 'edit'])->name('posts.edit');
     Route::put('/posts/{post}', [PostController::class, 'update'])->name('posts.update');
     Route::delete('/posts/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
+});
+
+Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
+    Route::resource('categories', CategoryController::class);
 });
 
 Route::post('/logout', function (Request $request) {
