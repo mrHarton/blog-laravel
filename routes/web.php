@@ -8,6 +8,7 @@ use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\RatingController;
 
 Route::resource('posts', PostController::class);
 
@@ -44,6 +45,8 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/posts/{post}', [PostController::class, 'update'])->name('posts.update');
     Route::delete('/posts/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
 });
+
+Route::post('/posts/{post}/rate', [RatingController::class, 'store'])->name('posts.rate');
 
 Route::prefix('admin')->middleware(['auth', 'role:admin'])->group(function () {
     Route::resource('categories', CategoryController::class);
